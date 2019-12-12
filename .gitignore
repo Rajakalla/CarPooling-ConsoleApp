@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/CarPooling.Data/obj
+/CarPooling.Data/bin/Debug/netstandard2.0
+/CarPooling.Data/CarPooling.Data.csproj.user
+/CarPoolingConsoleApp/bin/Debug
+/CarPoolingConsoleApp/obj
+/CarPoolingConsoleApp/CarPoolingConsoleApp.csproj.user

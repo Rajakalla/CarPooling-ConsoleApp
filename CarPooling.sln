@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28922.388
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarPoolingConsoleApp", "CarPoolingConsoleApp\CarPoolingConsoleApp.csproj", "{77B68A29-BD6B-449D-80CD-BCF6FC735607}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarPooling.Data", "CarPooling.Data\CarPooling.Data.csproj", "{365A057F-DAF8-4252-8C56-5260E5BD4367}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{77B68A29-BD6B-449D-80CD-BCF6FC735607}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77B68A29-BD6B-449D-80CD-BCF6FC735607}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77B68A29-BD6B-449D-80CD-BCF6FC735607}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77B68A29-BD6B-449D-80CD-BCF6FC735607}.Release|Any CPU.Build.0 = Release|Any CPU
+		{365A057F-DAF8-4252-8C56-5260E5BD4367}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{365A057F-DAF8-4252-8C56-5260E5BD4367}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{365A057F-DAF8-4252-8C56-5260E5BD4367}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{365A057F-DAF8-4252-8C56-5260E5BD4367}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AF3C2546-69F3-4B25-8274-05143A11AF45}
+	EndGlobalSection
+EndGlobal
