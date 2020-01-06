@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 
 namespace CarPoolingConsoleApp
 {
-    internal static class Utilities
+    internal static class Extensions
     {
         internal static String GetUserInputAsString()
         {

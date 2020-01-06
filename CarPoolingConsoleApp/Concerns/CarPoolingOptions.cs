@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CarPoolingConsoleApp.Models
+﻿namespace CarPoolingConsoleApp.Concerns
 {
     public enum CarPoolingOptions
     {

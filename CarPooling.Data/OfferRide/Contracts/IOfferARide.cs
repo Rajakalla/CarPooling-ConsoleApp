@@ -1,11 +1,10 @@
-﻿using CarPooling.Data.Models;
+﻿using CarPooling.Data.Concerns;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace CarPooling.Data.CarPoolingAppService
+namespace CarPooling.Data.OfferRide.Contracts
 {
-    public interface ICarPoolingAppService
+    public interface IOfferARide
     {
         /// <summary>
         /// Creates a ride
@@ -13,27 +12,21 @@ namespace CarPooling.Data.CarPoolingAppService
         /// <param name="ride">ride</param>
         /// <returns>Ride</returns>
         int CreateARide(Ride ride);
-        
-        /// <summary>
-        /// Books a ride
-        /// </summary>
-        /// <param name="booking"></param>
-        /// <returns></returns>
-        Booking BookARide(Booking booking);
-        
+
         /// <summary>
         /// Get all the Rides of the user
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
         List<Ride> GetMyRides(int userId);
-        
+
         /// <summary>
-        /// Get all the Bookings of the user
+        /// check if the given id is valid or not
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="rides"></param>
+        /// <param name="rideId"></param>
         /// <returns></returns>
-        List<Booking> GetMyBookings(int userId);
+        Boolean IsRideIdValid(List<Ride> rides, int rideId);
 
         /// <summary>
         /// filter all the bookings with boarding, destination and numberOfPassengers
@@ -43,13 +36,12 @@ namespace CarPooling.Data.CarPoolingAppService
         /// <param name="numberOfPassengers"></param>
         /// <returns></returns>
         List<Ride> GetFilteredRides(String boarding, String destination, int numberOfPassengers);
-        
+
         /// <summary>
-        /// check if the given id is valid or not
+        /// book the seats in that ride
         /// </summary>
-        /// <param name="rides"></param>
-        /// <param name="rideId"></param>
+        /// <param name="booking"></param>
         /// <returns></returns>
-        Boolean IsRideIdValid(List<Ride> rides,int rideId);
+        void BookSeatsOfARide(Booking booking);
     }
 }

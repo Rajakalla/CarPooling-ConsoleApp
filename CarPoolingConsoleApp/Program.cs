@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CarPoolingConsoleApp
+﻿namespace CarPoolingConsoleApp
 {
     class Program
     {
