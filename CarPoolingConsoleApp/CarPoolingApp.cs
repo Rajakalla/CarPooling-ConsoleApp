@@ -5,13 +5,21 @@ using CarPooling.Data.OfferRide.Contracts;
 using CarPooling.Data.OfferRide.Providers;
 using CarPooling.Data.RegisterAndLogin.Contracts;
 using CarPooling.Data.RegisterAndLogin.Providers;
-using CarPoolingConsoleApp.Concerns;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace CarPoolingConsoleApp
 {
+    internal enum CarPoolingOptions
+    {
+        OfferRide = 1,
+        RequestRide,
+        MyRides,
+        MyBookings,
+        ExitUser
+    }
+
     internal class CarPoolingApp
     {
         /// <summary>
@@ -59,6 +67,10 @@ namespace CarPoolingConsoleApp
             }
         }
 
+        /// <summary>
+        /// register or login the user
+        /// </summary>
+        /// <returns></returns>
         internal Boolean RegisterOrLogin()
         {
             Console.WriteLine("\n-------------------------------------");
