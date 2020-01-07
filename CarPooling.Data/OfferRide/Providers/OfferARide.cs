@@ -1,13 +1,11 @@
-﻿using CarPooling.Data.BookRide.Contracts;
-using CarPooling.Data.BookRide.Providers;
-using CarPooling.Data.Concerns;
+﻿using CarPooling.Data.Concerns;
 using CarPooling.Data.OfferRide.Contracts;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace CarPooling.Data.OfferRide.Providers
 {
-    public class OfferARide : IOfferARide
+    public class OfferRide : IOfferRide
     {
         /// <summary>
         /// All the rides created
@@ -17,7 +15,6 @@ namespace CarPooling.Data.OfferRide.Providers
         /// int to generate the new id for a new ride
         /// </summary>
         private static int RideIdGenerator = 1;
-        //private IBookARide BookRide = new BookARide();
 
         public int CreateARide(Ride ride)
         {
@@ -29,6 +26,11 @@ namespace CarPooling.Data.OfferRide.Providers
         public List<Ride> GetMyRides(int userId)
         {
             return OfferedRides.FindAll(ride => ride.Host.Id == userId).ToList<Ride>();
+        }
+
+        public Ride GetRideById(int rideId)
+        {
+            return OfferedRides.Find(ride => ride.Id==rideId);
         }
 
         public bool IsRideIdValid(List<Ride> rides, int rideId)

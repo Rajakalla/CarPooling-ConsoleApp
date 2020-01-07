@@ -21,11 +21,11 @@ namespace CarPoolingConsoleApp
         /// <summary>
         /// provider for offering a ride
         /// </summary>
-        IOfferARide OfferRide = new OfferARide();
+        IOfferRide OfferRide = new OfferRide();
         /// <summary>
         /// provider for booking a ride
         /// </summary>
-        IBookARide BookRide = new BookARide();
+        IBookRide BookRide = new BookRide();
         User CurrentUser { get; set; } = null;
         public CarPoolingApp()
         {
@@ -37,9 +37,9 @@ namespace CarPoolingConsoleApp
         /// </summary>
         internal void Initilaze()
         {
-            Console.WriteLine("-------------------------------\n");
-            Console.WriteLine("Welcome to car pooling service\n");
-            Console.WriteLine("-------------------------------\n");
+            Console.WriteLine("\n-------------------------------");
+            Console.WriteLine("\nWelcome to car pooling service");
+            Console.WriteLine("\n-------------------------------\n");
             Boolean exitApp = false;
             while (!exitApp)
             {
@@ -61,11 +61,12 @@ namespace CarPoolingConsoleApp
 
         internal Boolean RegisterOrLogin()
         {
-            Console.WriteLine("\nChoose the Option:\n");
-            Console.WriteLine("\n-------------------------------------\n");
-            Console.WriteLine("1) Register\n");
-            Console.WriteLine("2) Login\n");
-            Console.WriteLine("3) Exit\n");
+            Console.WriteLine("\n-------------------------------------");
+            Console.WriteLine("\nChoose the Option:");
+            Console.WriteLine("\n-------------------------------------");
+            Console.WriteLine("\n1) Register");
+            Console.WriteLine("\n2) Login");
+            Console.WriteLine("\n3) Exit\n");
             int option = Extensions.GetUserInputAsInt();
             switch (option)
             {
@@ -140,14 +141,14 @@ namespace CarPoolingConsoleApp
         /// <returns></returns>
         internal Boolean ShowMenu()
         {
-            Console.WriteLine("\n-------------------------------------\n");
-            Console.WriteLine("\nChoose the Option:\n");
-            Console.WriteLine("\n-------------------------------------\n");
-            Console.WriteLine("1) Offer a Ride\n");
-            Console.WriteLine("2) Request a Ride\n");
-            Console.WriteLine("3) My Rides\n");
-            Console.WriteLine("4) My Bookings\n");
-            Console.WriteLine("5) Exit User\n");
+            Console.WriteLine("\n-------------------------------------");
+            Console.WriteLine("\nChoose the Option:");
+            Console.WriteLine("\n-------------------------------------");
+            Console.WriteLine("\n1) Offer a Ride");
+            Console.WriteLine("\n2) Request a Ride");
+            Console.WriteLine("\n3) My Rides");
+            Console.WriteLine("\n4) My Bookings");
+            Console.WriteLine("\n5) Exit User\n");
             int option = Extensions.GetUserInputAsInt();
             switch ((CarPoolingOptions)option)
             {
@@ -162,24 +163,35 @@ namespace CarPoolingConsoleApp
                 case CarPoolingOptions.MyRides:
                     Console.Clear();
                     List<Ride> myRides = OfferRide.GetMyRides(CurrentUser.Id);
+                    List<Booking> bookings = BookRide.GetBookingRequestsForCurrentUser(CurrentUser);
+                    Console.Write("\n__________________________________________________________________");
+                    Console.Write("\nMy Offered Rides:");
+                    Console.Write("\n__________________________________________________________________\n");
                     ShowRides(myRides);
-                    List<Booking> bookings = BookRide.GetRequestsForCurrentUser(CurrentUser);
                     if (bookings.Count > 0)
                     {
-                        ShowBookings(bookings);
                         Boolean isValid;
                         do
                         {
-                            Console.Write("\n Enter the request Id to approve (-1 to exit)\n");
+                            Console.Write("\n___________________________________________________");
+                            Console.Write("\n Requests for your rides:");
+                            Console.Write("\n___________________________________________________\n");
+                            ShowBookings(bookings);
+                            Console.Write("\n Enter the request Id to approve (-1 to exit): ");
                             int requestId = Extensions.GetUserInputAsInt();
-                            isValid = true;//OfferRide.IsRideIdValid(bookings, requestId);
+                            isValid = BookRide.IsBookingIdValid(bookings, requestId);
                             if (requestId == -1)
                             {
+                                Console.Write("***Enter valid input.***");
                                 isValid = true;
                             }
                             else if (isValid)
                             {
-                                //////
+                                Booking booking = BookRide.GetBookingById(requestId);
+                                BookRide.ConfirmBooking(booking);
+                                OfferRide.BookSeatsOfARide(booking);
+                                isValid = false;
+                                Console.WriteLine($"Booking request with id {booking.Id} is confirmed.");
                             }
                         } while (isValid);
                     }
@@ -244,6 +256,9 @@ namespace CarPoolingConsoleApp
             List<Ride> rides = OfferRide.GetFilteredRides(boardingPlace, destinationPlace, numberOfPassengers);
             if (rides.Count > 0)
             {
+                Console.Write("\n___________________________________________________");
+                Console.Write("\n Available rides for your request:");
+                Console.Write("\n___________________________________________________\n");
                 ShowRides(rides);
                 Boolean isValid;
                 do
@@ -260,7 +275,7 @@ namespace CarPoolingConsoleApp
                         booking = new Booking
                         {
                             RideId = rideId,
-                            Host = rides[rideId].Host,
+                            Host = OfferRide.GetRideById(rideId).Host,
                             RequestedBy = CurrentUser,
                             BoardingPlace = boardingPlace,
                             DestinationPlace = destinationPlace,
@@ -268,8 +283,8 @@ namespace CarPoolingConsoleApp
                             DateOfRide = dateTime,
                             Status = false,
                         };
-                        BookRide.BookRide(booking);
-                        Console.WriteLine("Your ride has been booked");
+                        BookRide.BookARide(booking);
+                        Console.WriteLine("\nYour booking request has been sent.");
                     }
                     else
                     {
@@ -293,6 +308,7 @@ namespace CarPoolingConsoleApp
                 foreach (Ride ride in rides)
                 {
                     Console.WriteLine($"\n Ride Id : {ride.Id} ");
+                    Console.WriteLine($" Host : {ride.Host.Name.ToUpper()} ( Ph.No: {ride.Host.MobileNumber})");
                     Console.WriteLine($" Route : {ride.BoardingPlace} --> {String.Join(" --> ", ride.ViaRoutes)} --> {ride.DestinationPlace}");
                     Console.WriteLine($" Number of seats available : {ride.SeatsAvailable}");
                     Console.WriteLine($" Date and Time : {ride.StartDateTime.ToString()}");
@@ -314,7 +330,9 @@ namespace CarPoolingConsoleApp
                 foreach (Booking booking in bookings)
                 {
                     String status = booking.Status ? "Booked" : "Pending";
-                    Console.WriteLine($"\n Ride Id : {booking.RideId} ");
+                    Console.WriteLine($"\n Booking Id : {booking.RideId} ");
+                    Console.WriteLine($" Ride Host : {booking.Host.Name.ToUpper()} ( Ph.No: {booking.Host.MobileNumber})");
+                    Console.WriteLine($" Requested By: {booking.RequestedBy.Name.ToUpper()} ( Ph.No: {booking.RequestedBy.MobileNumber})");
                     Console.WriteLine($" Route : {booking.BoardingPlace} --> {booking.DestinationPlace}");
                     Console.WriteLine($" Seats Booked : {booking.NumberOfSeatsBooked}");
                     Console.WriteLine($" Date and Time : {booking.DateOfRide.ToString()}");
@@ -326,17 +344,5 @@ namespace CarPoolingConsoleApp
                 Console.WriteLine("\n There are no bookings. \n");
             }
         }
-
-        /// <summary>
-        /// show requests to approve
-        /// </summary>
-        /// <param name="bookings"></param>
-        //internal void ShowRequests(List<Booking> bookings)
-        //{
-        //    foreach(Booking booking in bookings)
-        //    {
-
-        //    }
-        //}
     }
 }

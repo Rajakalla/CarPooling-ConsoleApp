@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace CarPooling.Data.OfferRide.Contracts
 {
-    public interface IOfferARide
+    public interface IOfferRide
     {
         /// <summary>
         /// Creates a ride
@@ -19,6 +19,13 @@ namespace CarPooling.Data.OfferRide.Contracts
         /// <param name="userId"></param>
         /// <returns></returns>
         List<Ride> GetMyRides(int userId);
+
+        /// <summary>
+        /// Get the ride details by id
+        /// </summary>
+        /// <param name="rideId"></param>
+        /// <returns></returns>
+        Ride GetRideById(int rideId);
 
         /// <summary>
         /// check if the given id is valid or not
